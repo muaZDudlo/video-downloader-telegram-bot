@@ -66,6 +66,9 @@ setx BOT_TOKEN "YOUR_BOT_TOKEN"
 The bot reads your token from config.py using os.getenv("BOT_TOKEN")
 
 
+---
+
+
 ## Usage
 1. **Run the bot:**
 ```bash
@@ -82,6 +85,25 @@ python bot.py
 -Send it back as a Telegram video
 
 -Automatically delete the downloaded file from downloads/
+
+
+---
+
+
+## Notes & Limitations
+1. **Telegram file size limit:** Free bots can send files up to 50MB. Larger videos may fail.
+
+2. **Legal warning:** Only download content you have permission to use. Avoid copyrighted material.
+
+3. **Supported platforms:** Any platform supported by yt-dlp
+
+
+---
+
+
+## License
+
+MIT License – for educational use only. See LICENSE file.
    
 
 

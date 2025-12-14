@@ -52,5 +52,38 @@ venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 ```
+4. **Configure environment variables:**
+Instead of hardcoding your bot token, create an environment variable:
+
+   Linux/macOS-
+```bash
+export BOT_TOKEN="YOUR_BOT_TOKEN"
+```
+   Windows (PowerShell)-
+```bash
+setx BOT_TOKEN "YOUR_BOT_TOKEN"
+```
+The bot reads your token from config.py using os.getenv("BOT_TOKEN")
+
+
+## Usage
+1. **Run the bot:**
+```bash
+python bot.py
+```
+2. **Open Telegram, search for your bot, and send /start to initialize.**
+
+3. **Send a video link (YouTube or Facebook) to the bot.**
+
+4. **The bot will:**
+
+-Download the video
+
+-Send it back as a Telegram video
+
+-Automatically delete the downloaded file from downloads/
+   
+
+
    
    

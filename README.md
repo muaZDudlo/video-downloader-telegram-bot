@@ -36,7 +36,8 @@ git clone https://github.video-downloader-telegram-bot.com/yourusername/.git
 cd yt-video-downloader-bot
 ```
 2. **Create and activate virtual environment:**
-   Linux/macOS-
+
+    Linux/macOS-
 ```bash
 python3 -m venv venv
 source venv/bin/activate

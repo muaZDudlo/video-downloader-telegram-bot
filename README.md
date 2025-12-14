@@ -14,18 +14,6 @@ A **private Telegram bot** that allows you to download videos from supported pla
 
 ---
 
-## Project Structure
-
-video-downloader-telegram-bot/
-├── bot.py # Main bot logic
-├── downloader.py # Video downloader engine using yt-dlp
-├── config.py # Bot configuration (BOT_TOKEN, download folder)
-├── requirements.txt# Python dependencies
-├── README.md # This file
-├── .gitignore # Files/folders to ignore in Git
-├── downloads/ # Temporary storage for downloaded videos
-│ └── .gitkeep # Keeps the folder in GitHub
-└── venv/ # Python virtual environment (NOT pushed)
 
 
 ---
@@ -47,4 +35,21 @@ video-downloader-telegram-bot/
 git clone https://github.video-downloader-telegram-bot.com/yourusername/.git
 cd yt-video-downloader-bot
 ```
-2. 
+2. **Create and activate virtual environment:**
+   Linux/macOS-
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+   Windows (PowerShell)-
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+3. **Install dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+   
+   

@@ -8,12 +8,15 @@ os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Send me a YouTube, Facebook or Instagram video link and I'll download it for you!"
+        "Send me a YouTube, Facebook or Instagram video link!\n"
+        "Max size: 200MB"
     )
 
 async def handle_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
     url = update.message.text
-    msg = await update.message.reply_text("Downloading... ⏳")
+    msg = await update.message.reply_text("📥 Downloading...")
+    
+    video_path = None
     
     try:
         video_path = download_video(url, DOWNLOAD_DIR)
@@ -21,51 +24,56 @@ async def handle_link(update: Update, context: ContextTypes.DEFAULT_TYPE):
         file_size = os.path.getsize(video_path)
         file_size_mb = file_size / (1024 * 1024)
         
-        # Check if file is too large for Telegram (2GB limit)
-        if file_size > 2000 * 1024 * 1024:
-            await msg.edit_text(f"❌ Video is too large ({file_size_mb:.1f}MB). Telegram limit is 2GB.")
+        # Telegram limit for bots
+        if file_size > 200 * 1024 * 1024:  # 200MB
+            await msg.edit_text(
+                f"❌ Video is too large ({file_size_mb:.1f}MB)\n"
+                f"Maximum: 200MB"
+            )
             os.remove(video_path)
             return
         
-        await msg.edit_text(f"Uploading ({file_size_mb:.1f}MB)... 📤")
+        await msg.edit_text(f"📤 Uploading ({file_size_mb:.1f}MB)...")
         
-        # If under 50MB, send as video (playable inline)
-        if file_size <= 50 * 1024 * 1024:
-            try:
-                with open(video_path, 'rb') as video_file:
-                    await update.message.reply_video(
-                        video=video_file,
-                        supports_streaming=True
-                    )
-            except Exception:
-                # Fallback to document if video fails
-                with open(video_path, 'rb') as video_file:
-                    await update.message.reply_document(
-                        document=video_file,
-                        caption=f"Video ({file_size_mb:.1f}MB)"
-                    )
-        else:
-            # Send as document for files over 50MB
-            with open(video_path, 'rb') as video_file:
-                await update.message.reply_document(
-                    document=video_file,
-                    caption=f"Video ({file_size_mb:.1f}MB) - Too large for inline playback"
-                )
+        # Always send large files as document
+        with open(video_path, 'rb') as video_file:
+            await update.message.reply_document(
+                document=video_file,
+                caption=f"📹 Video ({file_size_mb:.1f}MB)",
+                read_timeout=300,
+                write_timeout=300
+            )
         
         os.remove(video_path)
         await msg.delete()
         
     except Exception as e:
-        await msg.edit_text(f"❌ Error: {str(e)}")
-        if 'video_path' in locals() and os.path.exists(video_path):
+        error_msg = str(e)
+        
+        if "Entity Too Large" in error_msg:
+            await msg.edit_text(
+                "❌ File too large for Telegram\n"
+                "Try a shorter or lower quality video"
+            )
+        else:
+            await msg.edit_text(f"❌ Error: {error_msg}")
+        
+        if video_path and os.path.exists(video_path):
             os.remove(video_path)
 
 def main():
-    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app = (
+        ApplicationBuilder()
+        .token(BOT_TOKEN)
+        .read_timeout(300)
+        .write_timeout(300)
+        .build()
+    )
+    
     app.add_handler(CommandHandler("start", start))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_link))
     
-    print("Bot is running...")
+    print(" Bot running...")
     app.run_polling()
 
 if __name__ == "__main__":

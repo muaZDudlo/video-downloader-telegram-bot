@@ -7,7 +7,7 @@ A **private Telegram bot** that allows you to download videos from supported pla
 ## Features
 
 - Telegram bot integration using `python-telegram-bot`
-- Downloads videos from YouTube, Facebook, and other supported platforms
+- Downloads videos from YouTube, Facebook, Instagram and other supported platforms
 - Automatic cleanup of downloaded files after sending
 - Easy-to-read code structure for learning and modification
 - Cross-platform support (Windows, macOS, Linux)
@@ -76,7 +76,7 @@ python bot.py
 ```
 2. **Open Telegram, search for your bot, and send /start to initialize.**
 
-3. **Send a video link (YouTube or Facebook) to the bot.**
+3. **Send a video link (YouTube or Facebook or Instagram) to the bot.**
 
 4. **The bot will:**
 

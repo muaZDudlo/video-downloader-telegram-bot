@@ -91,7 +91,7 @@ python bot.py
 
 
 ## Notes & Limitations
-1. **Telegram file size limit:** Free bots can send files up to 50MB. Larger videos upto 200MB maybe sent as file and can be downloaded from there by just clicking.
+1. **Telegram file size limit:** Free bots can send files up to 50MB. Larger videos upto 200MB maybe sent as file and can be downloaded from there by just clicking or maybe the uploading will be failed if it's too large.
 
 2. **Legal warning:** Only download content you have permission to use. Avoid copyrighted material.
 
